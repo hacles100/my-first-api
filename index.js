@@ -1,6 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const { restart } = require('nodemon')
+const { response } = require('express')
 
 const app = express()
 const port = 3000
@@ -96,6 +96,30 @@ app.put('/persons/:id', (req, res) => {
 
     res.status(404);
     res.send({message: `Person with id ${searchId} not found!`});
+   
+})
+
+
+
+app.delete('/persons/:id', (req, res) => {
+
+    const searchId = req.params.id;
+ 
+    for (let pos in listOfPersons){
+        
+        const personId = listOfPersons[pos].id;
+
+        if(personId == searchId){
+            listOfPersons.splice(pos, 1);
+            res.status(204);
+            res.send();
+            return;
+        }
+    }
+
+    res.status(404);
+    res.send({message: `Person with id ${searchId} not found!`});
+   
    
 })
 
