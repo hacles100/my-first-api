@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const { restart } = require('nodemon')
 
 const app = express()
 const port = 3000
@@ -78,6 +79,27 @@ app.post('/persons', (req, res) => {
     res.status(201);
     res.send(listOfPersons);
 })
+
+app.put('/persons/:id', (req, res) => {
+
+    const searchId = req.params.id;
+    const dataToUpdate = req.body;
+
+    for (let person of listOfPersons){
+        if(searchId == person.id){
+            person.name = dataToUpdate.name;
+            person.phone = dataToUpdate.phone;
+            res.send(person);
+            return;
+        }
+    }
+
+    res.status(404);
+    res.send({message: `Person with id ${searchId} not found!`});
+   
+})
+
+
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
