@@ -31,17 +31,31 @@ let listOfPersons = [
 ];
 
 function generateId() {
-    const lastPerson = listOfPersons[listOfPersons.length-1];
-    return lastPerson.id+1;
+    const lastPerson = listOfPersons[listOfPersons.length - 1];
+    return lastPerson.id + 1;
 }
+
+app.get('/persons/:id', (req, res) => {
+    const searchId = req.params.id;
+    
+    for (let person of listOfPersons) {
+        if (person.id == searchId) {
+            res.send(person);
+            return;
+        }
+    }
+
+    res.status(404);
+    res.send({message: `Person with id ${searchId} not found!`});
+})
 
 app.get('/persons', (req, res) => {
     const searchName = req.query.name;
-    
-    if(searchName!=undefined) {
+
+    if (searchName != undefined) {
         let result = [];
 
-        for(let person of listOfPersons) {
+        for (let person of listOfPersons) {
             if (person.name == searchName) {
                 result.push(person);
             }
@@ -56,8 +70,12 @@ app.get('/persons', (req, res) => {
 
 app.post('/persons', (req, res) => {
 
-    const newPerson = req.body;
+    let newPerson = req.body;
+    newPerson.id = generateId();
+
     listOfPersons.push(newPerson);
+
+    res.status(201);
     res.send(listOfPersons);
 })
 
