@@ -9,22 +9,31 @@ app.use(bodyParser.json())
 
 let listOfPersons = [
     {
+        id: 11,
         name: "Joana",
         phone: 5802943
     },
     {
+        id: 12,
         name: "Alvinho",
         phone: 5638290
     },
     {
+        id: 13,
         name: "Vera",
         phone: 5638290
     },
     {
+        id: 14,
         name: "Domingo",
         phone: 8987344
     }
 ];
+
+function generateId() {
+    const lastPerson = listOfPersons[listOfPersons.length-1];
+    return lastPerson.id+1;
+}
 
 app.get('/persons', (req, res) => {
     const searchName = req.query.name;
@@ -45,21 +54,11 @@ app.get('/persons', (req, res) => {
 
 })
 
-app.get('/say-something', (req, res) => {
+app.post('/persons', (req, res) => {
 
-    console.log(req.query);
-    const { name, age } = req.query;
-    const myResponse = {
-        name: name,
-        age: age
-    }
-
-    res.send(myResponse);
-})
-
-app.post('/say-something', (req, res) => {
-    console.log(req.body);
-    res.send(`The event name is ${req.body.eventName}`);
+    const newPerson = req.body;
+    listOfPersons.push(newPerson);
+    res.send(listOfPersons);
 })
 
 app.listen(port, () => {
