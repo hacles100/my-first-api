@@ -72,23 +72,26 @@ app.get('/persons', (req, res) => {
 
 app.get('/calculate', (req, res) => {
 
-     let calculate;
+    
      const a = req.query.a
      const b = req.query.b
      const op = req.query.op
 
-    if(op === '+'){
-        calculate = a + b
-        res.send(calculate.toString());
+    if(op === 'sum'){
+        calculate = parseInt(a) + parseInt(b)
+        res.send((calculate).toString());
+
     }else if(op === '-'){
-        calculate = a - b
-        res.send(calculate.toString());
+        calculate = parseInt(a) - parseInt(b)
+        res.send((calculate).toString());
+
     }else if(op === '*'){
-        calculate = a * b
-        res.send(calculate.toString());
+        calculate = parseInt(a) * parseInt(b)
+        res.send((calculate).toString());
+
     }else{
-        calculate = a / b
-        res.send(calculate.toString());
+        calculate = parseInt(a) / parseInt(b)
+        res.send((calculate).toString());
     }
 
 })
@@ -102,6 +105,32 @@ app.post('/persons', (req, res) => {
 
     res.status(201);
     res.send(listOfPersons);
+})
+
+app.post('/calculate', (req, res) => {
+
+    
+    const a = req.body.a
+    const b = req.body.b
+    const op = req.body.op
+
+   if(op === 'sum'){
+       calculate = parseInt(a) + parseInt(b)
+       res.send((calculate).toString());
+
+   }else if(op === '-'){
+       calculate = parseInt(a) - parseInt(b)
+       res.send((calculate).toString());
+
+   }else if(op === '*'){
+       calculate = parseInt(a) * parseInt(b)
+       res.send((calculate).toString());
+
+   }else{
+       calculate = parseInt(a) / parseInt(b)
+       res.send((calculate).toString());
+   }
+
 })
 
 app.put('/persons/:id', (req, res) => {
