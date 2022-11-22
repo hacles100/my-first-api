@@ -69,6 +69,30 @@ app.get('/persons', (req, res) => {
 
 })
 
+
+app.get('/calculate', (req, res) => {
+
+     let calculate;
+     const a = req.query.a
+     const b = req.query.b
+     const op = req.query.op
+
+    if(op === '+'){
+        calculate = a + b
+        res.send(calculate.toString());
+    }else if(op === '-'){
+        calculate = a - b
+        res.send(calculate.toString());
+    }else if(op === '*'){
+        calculate = a * b
+        res.send(calculate.toString());
+    }else{
+        calculate = a / b
+        res.send(calculate.toString());
+    }
+
+})
+
 app.post('/persons', (req, res) => {
 
     let newPerson = req.body;
